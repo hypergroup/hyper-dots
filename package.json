@@ -21,7 +21,9 @@
     "envs": "~0.1.4",
     "component-builder": "~0.12.0",
     "component-stylus": "git+https://github.com/mvanasse/component-stylus.git",
-    "express": "~3.4.8"
+    "express": "~3.4.8",
+    "superagent": "~0.16.0",
+    "nedb": "~0.10.2"
   },
   "devDependencies": {
     "mocha": "*",
