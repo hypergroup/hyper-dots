@@ -346,7 +346,6 @@ api.get('/games/:game/state', function(req, res, next) {
       var owner = state.panels[place];
       var pos = place.split('|');
       var panel = {
-        occupied: !!owner,
         row: parseInt(pos[0]),
         col: parseInt(pos[1])
       };
