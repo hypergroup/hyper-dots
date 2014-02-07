@@ -2,7 +2,9 @@
  * Module dependencies
  */
 
-var app = module.exports = require('simple-ui')('hyper-dots', [], require);
+var app = module.exports = require('simple-ui')('hyper-dots', [
+  require('ng-hyper-emitter-ws').name
+], require);
 
 /**
  * Initialize aux partials
@@ -19,4 +21,7 @@ var app = module.exports = require('simple-ui')('hyper-dots', [], require);
  * Start the app
  */
 
-app.start();
+app.start(function($injector) {
+  var emitter = $injector.get('hyperEmitterWs');
+  emitter({port: 80, host: 'hyper-emitter.herokuapp.com'});
+});

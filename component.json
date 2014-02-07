@@ -7,7 +7,8 @@
   "dependencies": {
     "camshaft/simple-ui": "*",
     "camshaft/component-angular": "1.0.8",
-    "mvanasse/ng-hyper-animate": "*"
+    "mvanasse/ng-hyper-animate": "*",
+    "hypergroup/ng-hyper-emitter-ws": "*"
   },
   "development": {},
   "main": "public/javascripts/index.js",
