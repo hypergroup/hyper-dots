@@ -23,9 +23,9 @@ section.game-current(data-hyper=".games")
         td: span {{$index + 1}}
         td: a(data-hyper-link="/games/:game",
               data-hyper-bind="game.name")
-        td: a(data-hyper-link="games.owner",
+        td: a(data-hyper-link="/users/:game.owner",
               data-hyper-bind="game.owner.first-name")
-        td
-          a(data-ng-repeat="player in games.players",
-            data-hyper-link="player",
+        td(data-hyper="game.players")
+          a(data-ng-repeat="player in players",
+            data-hyper-link="/users/:player",
             data-hyper-bind="player.first-name")
