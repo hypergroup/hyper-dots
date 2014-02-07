@@ -27,7 +27,6 @@
 
 section.messages(data-hyper="game.chat")
   p.message(data-ng-repeat="message in chat")
-    h1(data-hyper-bind="author.color")
     span.author(data-hyper-bind="message.author.first-name")
     span.content(data-hyper-bind="message.content")
     span.date(data-hyper-bind="message.date")
@@ -36,14 +35,14 @@ section.messages(data-hyper="game.chat")
       input(data-hyper-input="input")
     input(type="submit", value="submit")
 
-.controls
+section.controls
   .players(data-hyper="game.state.scores")
-    div(data-ng-repeat="score in scores")
-      h1(data-hyper-bind="score.player.first-name")
+    .player(data-ng-repeat="score in scores")
+      .color(data-hyper="score.player.color",
+             data-ng-style="{'background': color }")
+      p(data-hyper-bind="score.player.first-name")
       // TODO fix hyper-bind
-      h2(data-ng-bind="score.score")
-      div.color(data-hyper="score.player.color",
-                data-ng-style="{'background': color }")
+      p(data-ng-bind="score.score")
       div(data-hyper="game.state.turn",
           data-ng-switch="turn == score.player.href")
         div(data-ng-switch-when="true")
