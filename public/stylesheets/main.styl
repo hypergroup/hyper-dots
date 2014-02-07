@@ -275,6 +275,22 @@ $unit = 10px
     size 100%
     z-index 3
 
+.panels
+  min-height 200px
+  relative top left
+  display inline-block
+
+.panel
+  position absolute
+  for r in 1...20
+    &[data-row={'"' + r + '"'}]
+      top (r * s)
+  for c in 1...20
+    &[data-col={'"' + c + '"'}]
+      left (c * s)
+  width: s
+  height: s
+
 .color
   display block
   size 100px
