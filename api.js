@@ -51,7 +51,15 @@ var API_URL = envs('API_URL');
 api.use(function(req, res, next) {
   var auth = req.header('authorization');
   if (!auth) return next(new Error('Unauthorized'));
-  req.base = req.base || '/api';
+
+  req.base = req.base || '';
+  req.base = req.base + '/api';
+  var url = req.base + (req.url === '/' ? '' : req.url);
+  var json = res.json;
+  res.json = function(obj) {
+    obj.href = url;
+    json.call(res, obj);
+  };
 
   // TODO cache
   request(API_URL, auth)
