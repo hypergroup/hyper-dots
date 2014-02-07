@@ -1,0 +1,31 @@
+{
+  "name": "hyper-dots",
+  "version": "0.0.0",
+  "description": "Dots and boxes",
+  "author": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hypergroup/hyper-dots"
+  },
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.x.x"
+  },
+  "dependencies": {
+    "simple-stack-ui": "~0.3.5",
+    "startup": "~0.3.0",
+    "envs": "~0.1.4",
+    "component-builder": "~0.12.0",
+    "component-stylus": "git+https://github.com/mvanasse/component-stylus.git",
+    "express": "~3.4.8"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*",
+    "lr": "*"
+  }
+}

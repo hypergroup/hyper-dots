@@ -1,0 +1,26 @@
+{
+  "repo": "hypergroup/hyper-dots",
+  "name": "hyper-dots",
+  "description": "Dots and boxes",
+  "version": "0.0.1",
+  "keywords": [],
+  "dependencies": {
+    "camshaft/simple-ui": "*",
+    "camshaft/component-angular": "1.0.8",
+    "mvanasse/ng-hyper-animate": "*"
+  },
+  "development": {},
+  "main": "public/javascripts/index.js",
+  "scripts": [
+    "public/javascripts/index.js",
+    "public/javascripts/routes.js"
+  ],
+  "styles": [
+    "public/stylesheets/index.styl"
+  ],
+  "angular-templates": [
+    "public/partials/games.jade",
+    "public/partials/index.jade"
+  ],
+  "license": "MIT"
+}
