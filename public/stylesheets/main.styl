@@ -1,9 +1,12 @@
+// presets
+// -------
 
 a
-a:visited
-a:hover
 a:active
+  text-decoration none
   color blue
+  &:hover
+   color gray
 
 head, style, script
   display none!important
@@ -19,120 +22,214 @@ html
   color black
   font-family 'proxima-nova', Helvetica, Arial, san-serif
   flex-flow column
-  *
-    justify-content center
+  display flex
 
 body
-  min-height 500px
-  background linear-gradient(top, white, rgba(white, 0))
-  background-size 100% @min-height
-  background-repeat no-repeat
-  padding-top 20px
-  margin 0
   display flex
   flex-flow column
+  min-height 500px
+  padding-left 20px
+  padding-right 20px
+  margin 0
+
   > *
     display flex
 
+  > main
+  > footer
   > header
-    padding 0 @padding-top @padding-top
-    max-width 1000px
+    padding-top 20px
+    padding-bottom 20px
     margin-left auto
     margin-right auto
-    flex 1 1 auto
     width 100%
-    .brand
-      flex 2 1 50%
-      justify-content flex-start
-      font-weight bold
-      &:after
-        content "···"
-    .account
-      flex 2 1 50%
-      justify-content flex-end
-
-  > footer
-    padding-top @padding-top
+    max-width 700px
 
   > main
     min-height @min-height
-    padding @padding-top
-    max-width 980px
-    margin-left auto
-    margin-right auto
+    margin-top 60px
     border-style solid
     border-color rgba(black, .25)
-    border-width 1px 0
+    border-width 0
     flex-flow column
-    width 100%
 
-// sections
-// --------
+// header
+// ------
 
-// main > section
-//   display flex
-//   flex-flow row
-//   color white
-//   padding 20px
-//   border-width 10px
-//   border-type solid
+body > header
+  fixed top left
+  width 100%
+  max-width inherit
+  padding-left 20px
+  padding-right 20px
+  border-bottom 1px solid #ccc
+  background linear-gradient(top, white, rgba(white, .9))
+  z-index 10
+  line-height 28px
+  > *
+    flex 2 1 50%
 
-// section.app
-//   border-color orange
+  .brand
+    font-size 28px
+    justify-content flex-start
+    &:after
+      content "···"
+      font-weight bold
+      letter-spacing 5px
+      color dimGray
 
-// section.games
-//   border-color green
-
-// section.board
-//   border-color blue
+  .account
+    justify-content flex-end
+    span
+      float right
 
 // forms
 // -----
 
 form
   flex-flow column
+  display flex
 
-.form-group
-  flex-flow row
-  margin-bottom 10px
-  span
-    margin-right @margin-bottom
+  label
+    color gray
+  input:focus ~ label
+    color blue
 
-input
-  padding 0
-  margin 0
-  display inline-block!important
-  box-sizing content-box
+  .form-group
+    display block
+    margin-bottom 10px
+    &.inline
+      text-align center
+      label *
+        display inline-block
+        width 100px
+        margin-right @margin-bottom
+      span
+        text-align right
 
-.color
-  size 100px
-  display block
+  // inputs
+  // ------
+
+  input
+    padding 5px
+    display inline-block
+    box-sizing content-box
+    box-shadow inset 0 2px 0px -1px #ddd
+    border 1px solid #ccc
+
+    font-size 80%
+    line-height normal
+
+    transition all
+
+  button
+  input
+  select
+  textarea
+    vertical-align baseline
+    text-transform none
+
+    &[type="submit"]
+      float right
+
+    &[type="submit"]
+    &[type="button"]
+      cursor pointer
+
+    &:focus
+      outline none
+
+// tables
+// -----
+
+table
+  width 100%
+  border-collapse collapse
+  border-spacing 0
+  empty-cells show
+  border 1px solid #cbcbcb
+  th
+  td
+    font-size inherit
+    margin 0
+    overflow visible
+    padding 6px 12px
+    &:first-child
+      border-left-width 0
+  thead
+    background blue
+    color white
+    text-align left
+    vertical-align bottom
+  td
+    background-color transparent
+    border-bottom 1px solid #cbcbcb
+  tbody tr
+    display table-row
+    vertical-align inherit
+    border-color inherit
+    &:hover
+      background-color whitesmoke
+      // &:nth-child(2n-1) td
+      //   background-color #fefefe
+
+// sections
+// --------
+
+section
+  background white
+  border 1px solid #ccc
+  padding 20px
+  margin-bottom 20px
+  display flex
+  flex-flow column
+
+  > header
+    margin-top 0
+    font-size $font-md
+    line-height 20px
+    margin-bottom 20px
+    text-transform uppercase
+    font-weight 900
+    letter-spacing 1px
+
+  > .content
+    display flex
+    flex-flow row
+
+    > .aside
+      margin-top 0
 
 s = 50px
 $unit = 10px
 
 .game
-  // for r in 1...20
-  //   &[data-width={'"' + r + '"'}]
-  //     width (r * s)
+  for r in 1...20
+    &[data-width={'"' + r + '"'}]
+      width ((r * s) + $unit)
   for r in 1...20
     &[data-height={'"' + r + '"'}]
       height ((r * s) + $unit)
   width 100%
+  margin-left auto
+  margin-right auto
+  margin-bottom 20px
   .board
     position relative
-    size 50% 100%
-    margin 0 auto
+    height 100%
+    background rgba(white, .5)
+    margin-left 5px
+    // box-shadow -2px 0 10px rgba(black, .05)
 
 .edges
   min-height 200px
   relative top left
   display inline-block
+  background rgba(white, .6)
 
 
 .edge
   position absolute
-  display inline-block
   &[data-type="v"]
     transform translate(-(s / 2), (s / 2)) rotate(90deg)
   for r in 1...20
@@ -143,11 +240,25 @@ $unit = 10px
       left (c * s)
   width s
   height $unit
-  background #aaa
   padding 0 ($unit / 2)
   box-sizing border-box
-  // border-right 5px solid transparent
-  // border-left @border-right
+  background #eee
+  border-width 0 6px
+  border-color rgba(white, .7)
+  border-style solid
+  transition all .2s linear
+  box-shadow 0 0 0px 1px rgba(black, .2)
+  &:hover
+    box-shadow 0 0 0 1px rgba(black, .6)
+  &:before
+    content ""
+    absolute top right -10px
+    box-sizing border-box
+    content ""
+    width s + 8px
+    height $unit
+    background white
+    z-index 2
 
   form
     position relative
@@ -159,6 +270,51 @@ $unit = 10px
       cursor pointer
       size 100%
   .color
-    absolute top
+    absolute top left
     display block
     size 100%
+    z-index 3
+
+.color
+  display block
+  size 100px
+
+// chat
+// ----
+
+.messages
+  background white
+  padding 20px
+
+  form
+    flex-flow row
+    input[type="text"]
+      flex 1 1 auto
+    .form-group
+      margin-bottom 0
+      flex 1 1 auto
+      input
+        display flex
+
+.message
+  margin-top 0
+
+  span
+    line-height $font-md
+
+  .author
+    background #ccc
+    color white
+    border-radius 3px
+    padding 3px
+    min-width 100px
+    text-align center
+    margin-right 10px
+    display inline-block
+    &:before
+      content " "
+
+  .date
+    color #ccc
+    float right
+    text-align right

@@ -1,10 +1,9 @@
 
-section.game(data-hyper="game.height, game.width",
-             data-height="{{height}}",
-             data-width="{{width}}")
+.game(data-hyper="game.height, game.width",
+      data-height="{{height}}",
+      data-width="{{width}}")
 
   .board(data-hyper="game.state")
-
     .panels(data-hyper="state.panels")
       .panel(data-ng-repeat="panel in panels",
              data-hyper="panel.row, panel.col, panel.owner.color",
@@ -21,9 +20,21 @@ section.game(data-hyper="game.height, game.width",
 
         .color(data-hyper="edge.owner.color",
                data-ng-style="{'background': color }")
+
         form(data-hyper-form="edge.occupy")
           .inner(data-ng-click="submit()")
 
+
+section.messages(data-hyper="game.chat")
+  p.message(data-ng-repeat="message in chat")
+    h1(data-hyper-bind="author.color")
+    span.author(data-hyper-bind="message.author.first-name")
+    span.content(data-hyper-bind="message.content")
+    span.date(data-hyper-bind="message.date")
+  form(data-hyper-form="game.chat.message")
+    .form-group.inline(data-ng-repeat="input in inputs")
+      input(data-hyper-input="input")
+    input(type="submit", value="submit")
 
 .controls
   .players(data-hyper="game.state.scores")
@@ -37,20 +48,6 @@ section.game(data-hyper="game.height, game.width",
           data-ng-switch="turn == score.player.href")
         div(data-ng-switch-when="true")
           h1 waiting on other player
-
-.messages(data-hyper="game.chat")
-  .message(data-ng-repeat="message in chat")
-    p
-      | author:
-      span(data-hyper-bind="message.author.first-name")
-      | content;
-      span(data-hyper-bind="message.content")
-      | date:
-      span(data-hyper-bind="message.date")
-  form(data-hyper-form="game.chat.message")
-    div(data-ng-repeat="input in inputs")
-      input(data-hyper-input="input")
-    input(type="submit", value="submit")
 
 
 

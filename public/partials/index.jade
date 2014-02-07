@@ -1,12 +1,31 @@
 
-.games(data-hyper=".games")
-  .game(data-ng-repeat="game in games")
-    a(data-hyper-link="/games/:game",
-      data-hyper-bind="game.name")
-  br
+section.game-create(data-hyper=".games")
+  header create game
+
   form(data-hyper-form="games.create")
-    div(data-ng-repeat="input in inputs")
-      span(data-hyper-bind="input.name")
-      br
-      input(data-hyper-input="input")
+    .form-group.inline(data-ng-repeat="input in inputs")
+      label
+        span(data-hyper-bind="input.name")
+        input(data-hyper-input="input")
     input(type="submit")
+
+section.game-current(data-hyper=".games")
+  header current games
+
+  table
+    thead
+      th #
+      th name
+      th owner
+      th players
+    tbody
+      tr.game(data-ng-repeat="game in games")
+        td: span {{$index + 1}}
+        td: a(data-hyper-link="/games/:game",
+              data-hyper-bind="game.name")
+        td: a(data-hyper-link="games.owner",
+              data-hyper-bind="game.owner.first-name")
+        td
+          a(data-ng-repeat="player in games.players",
+            data-hyper-link="player",
+            data-hyper-bind="player.first-name")
