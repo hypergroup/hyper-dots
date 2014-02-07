@@ -40,13 +40,16 @@ section.controls
     .player(data-ng-repeat="score in scores")
       .color(data-hyper="score.player.color",
              data-ng-style="{'background': color }")
-      p(data-hyper-bind="score.player.first-name")
-      // TODO fix hyper-bind
-      p(data-ng-bind="score.score")
-      div(data-hyper="game.state.turn",
-          data-ng-switch="turn == score.player.href")
-        div(data-ng-switch-when="true")
-          h1 waiting on other player
+      .content
+        // TODO fix hyper-bind
+        h3
+          span(data-hyper-bind="score.player.first-name")
+          |  - 
+          span(data-ng-bind="score.score")
+        div(data-hyper="game.state.turn",
+            data-ng-switch="turn == score.player.href")
+          div(data-ng-switch-when="true")
+            h4 waiting on other player
 
 
 
