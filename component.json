@@ -20,7 +20,7 @@
     "public/stylesheets/index.styl"
   ],
   "angular-templates": [
-    "public/partials/games.jade",
+    "public/partials/game.jade",
     "public/partials/index.jade"
   ],
   "license": "MIT"

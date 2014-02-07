@@ -1,1 +1,5 @@
-p games
+section.game
+
+div(data-hyper="game.players")
+  div(data-ng-repeat="player in players")
+    h1(data-hyper-bind="player.name")

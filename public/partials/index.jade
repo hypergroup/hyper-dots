@@ -1,1 +1,12 @@
-div(data-hyper-redirect="/games/:.games")
+
+.games(data-hyper=".games")
+  .game(data-ng-repeat="game in games")
+    a(data-hyper-link="/games/:game",
+      data-hyper-bind="game.name")
+  br
+  form(data-hyper-form="games.create")
+    div(data-ng-repeat="input in inputs")
+      span(data-hyper-bind="input.name")
+      br
+      input(data-hyper-input="input")
+    input(type="submit")

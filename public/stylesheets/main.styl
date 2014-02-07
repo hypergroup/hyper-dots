@@ -1,10 +1,164 @@
-html
-  padding 40px
-  font-family Helvetica, Arial, san-serif
 
 a
 a:visited
 a:hover
 a:active
-  color $color-dark
+  color blue
 
+head, style, script
+  display none!important
+
+*
+  box-sizing border-box
+
+// layout
+// ------
+
+html
+  background whitesmoke
+  color black
+  font-family 'proxima-nova', Helvetica, Arial, san-serif
+  flex-flow column
+  *
+    justify-content center
+
+body
+  min-height 500px
+  background linear-gradient(top, white, rgba(white, 0))
+  background-size 100% @min-height
+  background-repeat no-repeat
+  padding-top 20px
+  margin 0
+  display flex
+  flex-flow column
+  > *
+    display flex
+
+  > header
+    padding 0 @padding-top @padding-top
+    max-width 1000px
+    margin-left auto
+    margin-right auto
+    flex 1 1 auto
+    width 100%
+    .brand
+      flex 2 1 50%
+      justify-content flex-start
+      font-weight bold
+      &:after
+        content "···"
+    .account
+      flex 2 1 50%
+      justify-content flex-end
+
+  > footer
+    padding-top @padding-top
+
+  > main
+    min-height @min-height
+    padding @padding-top
+    max-width 980px
+    margin-left auto
+    margin-right auto
+    border-style solid
+    border-color rgba(black, .25)
+    border-width 1px 0
+    flex-flow column
+    width 100%
+
+// sections
+// --------
+
+// main > section
+//   display flex
+//   flex-flow row
+//   color white
+//   padding 20px
+//   border-width 10px
+//   border-type solid
+
+// section.app
+//   border-color orange
+
+// section.games
+//   border-color green
+
+// section.board
+//   border-color blue
+
+// forms
+// -----
+
+form
+  flex-flow column
+
+.form-group
+  flex-flow row
+  margin-bottom 10px
+  span
+    margin-right @margin-bottom
+
+input
+  padding 0
+  margin 0
+  display inline-block!important
+  box-sizing content-box
+
+.color
+  size 100px
+  display block
+
+s = 50px
+$unit = 10px
+
+.game
+  // for r in 1...20
+  //   &[data-width={'"' + r + '"'}]
+  //     width (r * s)
+  for r in 1...20
+    &[data-height={'"' + r + '"'}]
+      height ((r * s) + $unit)
+  width 100%
+  .board
+    position relative
+    size 50% 100%
+    margin 0 auto
+
+.edges
+  min-height 200px
+  relative top left
+  display inline-block
+
+
+.edge
+  position absolute
+  display inline-block
+  &[data-type="v"]
+    transform translate(-(s / 2), (s / 2)) rotate(90deg)
+  for r in 1...20
+    &[data-row={'"' + r + '"'}]
+      top (r * s)
+  for c in 1...20
+    &[data-col={'"' + c + '"'}]
+      left (c * s)
+  width s
+  height $unit
+  background #aaa
+  padding 0 ($unit / 2)
+  box-sizing border-box
+  // border-right 5px solid transparent
+  // border-left @border-right
+
+  form
+    position relative
+    display block
+    size 100%
+    &.ng-hyper-loading .inner
+      display none
+    .inner
+      cursor pointer
+      size 100%
+  .color
+    absolute top
+    display block
+    size 100%

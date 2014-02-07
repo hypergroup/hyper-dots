@@ -4,5 +4,5 @@
 
 module.exports = {
   '/': 'index',
-  '/games/:games': 'games'
+  '/games/:game': 'game'
 };
