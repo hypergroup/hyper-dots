@@ -284,8 +284,6 @@ api.post('/games/:game', function(req, res, next) {
         turn: game.players[0]
       };
 
-      console.log(state);
-
       db.state.insert(state, function(err) {
         if (err) return next(err);
         notify(url);
@@ -375,7 +373,7 @@ api.get('/games/:game/state', function(req, res, next) {
       edges: edges,
       board: board,
       scores: scores,
-      turn: state.turn
+      turn: req.base + '/users/' + state.turn
     });
   });
 });
