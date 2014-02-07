@@ -387,18 +387,44 @@ api.post('/games/:game/state', function(req, res, next) {
     if (err) return next(err);
     if (!state) return res.send(404);
     if (state.turn !== req.user.id) return next(new Error('tried to play out of turn... nice try'));
-    if (state.edges[position] !== 0) return next(new Error('invalid move'));
+    var edges = state.edges;
+    if (edges[position] !== 0) return next(new Error('invalid move'));
 
-    state.edges[position] = req.user.id;
+    edges[position] = req.user.id;
 
-    // TODO fill in squares
-    // TODO compute scores
+    var scored = false;
+    var scores = state.scores;
+    var panels = {};
+    Object.keys(state.panels).forEach(function(panel) {
+      // the panel has been claimed
+      if (state.panels[panel]) return panels[panel] = state.panels[panel];
 
-    var i = game.players.indexOf(req.user.id) + 1;
-    var turn = game.players[i];
-    if (!turn) turn = game.players[0];
+      // verify any new changes
+      var pos = panel.split('|');
+      var row = parseInt(pos[0], 10);
+      var col = parseInt(pos[1], 10);
 
-    db.state.update({_id: state._id}, {$set: {turn: turn, edges: state.edges}}, function(err) {
+      // the panel has not been claimed yet
+      if (!edges[row + 'h' + col] ||
+          !edges[(row + 1) + 'h' + col] ||
+          !edges[row + 'v' + col] ||
+          !edges[row + 'v' + (col + 1)]) return panels[panel] = 0;
+
+      // the panel was just claimed
+      var id = req.user.id;
+      panels[panel] = id;
+      scores[id.replace(/\./g, '__DOT__')]++;
+      scored = true;
+    });
+
+    var turn = state.turn;
+    if (!scored) {
+      var i = game.players.indexOf(req.user.id) + 1;
+      turn = game.players[i];
+      if (!turn) turn = game.players[0];
+    }
+
+    db.state.update({_id: state._id}, {$set: {turn: turn, edges: edges, panels: panels, scores: scores}}, function(err) {
       var url = req.base + '/games/' + req.params.game + '/state';
       notify(url);
       res.redirect(url);
