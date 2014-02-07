@@ -312,7 +312,6 @@ api.get('/games/:game/state', function(req, res, next) {
         : place.split('h');
 
       var edge = {
-        occupied: !!owner,
         row: parseInt(pos[0]),
         col: parseInt(pos[1]),
         type: vertical ? 'v' : 'h'
@@ -416,6 +415,7 @@ api.param('user', function(req, res, next, id) {
       if (err) return next(err);
       if (!response.ok) return next(response.error);
       res.locals.user = response.body;
+      res.locals.user.href = res.locals.user.id = id;
       next();
     });
 });
@@ -425,7 +425,8 @@ api.get('/users/:user', function(req, res, next) {
   res.json({
     name: user.name,
     'first-name': user.first_name,
-    'last-name': user.last_name
+    'last-name': user.last_name,
+    color: stringToColor(user.id)
   });
 });
 
@@ -444,4 +445,13 @@ function request(href, token) {
     .get(href)
     .set({accept: 'application/hyper+json', authorization: token})
     .buffer(true);
+}
+
+function stringToColor(str) {
+  // str to hash
+  for (var i = 0, hash = 0; i < str.length; hash = str.charCodeAt(i++) + ((hash << 5) - hash));
+  // int/hash to hex
+  for (var i = 0, color = "#"; i < 3; color += ("00" + ((hash >> i++ * 8) & 0xFF).toString(16)).slice(-2));
+
+  return color;
 }
