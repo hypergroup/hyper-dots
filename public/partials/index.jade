@@ -1,13 +1,23 @@
 
-section.game-create(data-hyper=".games")
-  header create game
+.landing
 
-  form(data-hyper-form="games.create")
-    .form-group.inline(data-ng-repeat="input in inputs")
-      label
-        span(data-hyper-bind="input.name")
-        input(data-hyper-input="input")
-    input(type="submit")
+  .intro
+    h3.
+      <em>dots</em> is a game built on modern hypermedia and web application principles.
+
+    p Links, intro, etc, are maybe forthcoming.
+
+    a(href="https://github.com/hypergroup/hyper-dots") Source
+
+  section.game-create.mini(data-hyper=".games")
+    header create game
+
+    form(data-hyper-form="games.create")
+      .form-group.inline(data-ng-repeat="input in inputs")
+        label
+          span(data-hyper-bind="input.name")
+          input(data-hyper-input="input")
+      input(type="submit")
 
 section.game-current(data-hyper=".games")
   header current games

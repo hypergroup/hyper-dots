@@ -200,9 +200,23 @@ section
     > .aside
       margin-top 0
 
+  &.mini
+    max-width 275px
+    .landing &
+      order 2
+      flex 1 1 90%
+
+.landing
+  display flex
+  flex-flow row
+  flex 1 1 auto
+  .intro
+    flex 1 1 auto
+    padding 20px
+
+// TODO clean up these rules
 s = 50px
 $unit = 10px
-
 .game
   for r in 1...20
     &[data-width={'"' + r + '"'}]
@@ -264,6 +278,7 @@ $unit = 10px
     position relative
     display block
     size 100%
+    z-index 20
     &.ng-hyper-loading .inner
       display none
     .inner
