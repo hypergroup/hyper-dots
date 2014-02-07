@@ -17,6 +17,7 @@ function createDB(name) {
 }
 
 var db = {
+  chat: createDB('chat'),
   games: createDB('games'),
   state: createDB('state'),
   users: createDB('users')
@@ -402,6 +403,52 @@ api.post('/games/:game/state', function(req, res, next) {
       notify(url);
       res.redirect(url);
     });
+  });
+});
+
+api.get('/games/:game/chat', function(req, res, next) {
+  db.chat.find({game: req.params.game}).sort({date: 1}).exec(function(err, messages) {
+    if (err) return next(err);
+    res.json({
+      data: messages.map(function(message) {
+        return {
+          author: {
+            href: req.base + '/users/' + message.author
+          },
+          date: message.date,
+          content: message.content
+        };
+      }),
+      message: {
+        action: req.base + '/games/' + req.params.game + '/chat',
+        method: 'POST',
+        input: {
+          content: {
+            type: 'text',
+            required: true
+          }
+        }
+      }
+    });
+  });
+});
+
+api.post('/games/:game/chat', function(req, res, next) {
+  var game = res.locals.game;
+  var content = req.body.content;
+  if (!req.body || !content) return next(new Error('missing content parameter'));
+
+  var message = {
+    game: game._id,
+    author: req.user.id,
+    date: new Date(),
+    content: content
+  };
+
+  db.chat.insert(message, function(err) {
+    var url = req.base + '/games/' + req.params.game + '/chat';
+    notify(url);
+    res.redirect(url);
   });
 });
 
