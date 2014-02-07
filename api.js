@@ -18,7 +18,8 @@ function createDB(name) {
 
 var db = {
   games: createDB('games'),
-  state: createDB('state')
+  state: createDB('state'),
+  users: createDB('users')
 };
 
 var EMITTER_URL = envs('EMITTER_URL');
@@ -182,7 +183,9 @@ api.get('/games/:game', function(req, res, next) {
       return {
         href: req.base + '/users/' + player
       };
-    })
+    }),
+    width: game.width,
+    height: game.height
   };
 
   if (game.status === 'waiting' && !~game.players.indexOf(req.user.id)) {
