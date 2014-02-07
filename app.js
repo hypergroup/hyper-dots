@@ -11,7 +11,7 @@ var api = require('./api');
  */
 
 var app = module.exports = stack({
-  restricted: false
+  restricted: !!envs('RESTRICT', false)
 });
 
 /**
