@@ -303,21 +303,29 @@ api.get('/games/:game/state', function(req, res, next) {
     var game = res.locals.game;
     var canPlay = state.turn === req.user.id;
 
-    var edges = {};
+    var edges = [];
     Object.keys(state.edges).forEach(function(place) {
       var owner = state.edges[place];
-      edges[place] = {
-        occupied: !!owner
+      var vertical = !!~place.indexOf('v');
+      var pos = vertical
+        ? place.split('v')
+        : place.split('h');
+
+      var edge = {
+        occupied: !!owner,
+        row: parseInt(pos[0]),
+        col: parseInt(pos[1]),
+        type: vertical ? 'v' : 'h'
       };
 
       if (owner) {
-        edges[place].owner = {
+        edge.owner = {
           href: req.base + '/users/' + owner
         };
       }
 
       if (!owner && canPlay) {
-        edges[place].occupy = {
+        edge.occupy = {
           method: 'POST',
           action: req.base + '/games/' + req.params.game + '/state',
           input: {
@@ -328,20 +336,27 @@ api.get('/games/:game/state', function(req, res, next) {
           }
         }
       }
+
+      edges.push(edge);
     });
 
-    var board = {};
-    Object.keys(state.board).forEach(function(square) {
-      var owner = state.edges[square];
-      board[square] = {
-        occupied: !!owner
+    var board = [];
+    Object.keys(state.board).forEach(function(place) {
+      var owner = state.edges[place];
+      var pos = place.split('|');
+      var b = {
+        occupied: !!owner,
+        row: parseInt(pos[0]),
+        col: parseInt(pos[1])
       };
 
       if (owner) {
-        board[square].owner = {
+        b.owner = {
           href: req.base + '/users/' + owner
         };
       }
+
+      board.push(b);
     });
 
     var scores = Object.keys(state.scores).map(function(player) {
