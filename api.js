@@ -265,10 +265,10 @@ api.post('/games/:game', function(req, res, next) {
         }
       }
 
-      var board = {};
+      var panels = {};
       for (h = 0; h < game.height; h++) {
         for (v = 0; v < game.width; v++) {
-          board[h + '|' + v] = 0;
+          panels[h + '|' + v] = 0;
         }
       }
 
@@ -280,7 +280,7 @@ api.post('/games/:game', function(req, res, next) {
       var state = {
         game: game._id,
         edges: edges,
-        board: board,
+        panels: panels,
         scores: scores,
         turn: game.players[0]
       };
@@ -341,23 +341,23 @@ api.get('/games/:game/state', function(req, res, next) {
       edges.push(edge);
     });
 
-    var board = [];
-    Object.keys(state.board).forEach(function(place) {
-      var owner = state.edges[place];
+    var panels = [];
+    Object.keys(state.panels).forEach(function(place) {
+      var owner = state.panels[place];
       var pos = place.split('|');
-      var b = {
+      var panel = {
         occupied: !!owner,
         row: parseInt(pos[0]),
         col: parseInt(pos[1])
       };
 
       if (owner) {
-        b.owner = {
+        panel.owner = {
           href: req.base + '/users/' + owner
         };
       }
 
-      board.push(b);
+      panels.push(panel);
     });
 
     var scores = Object.keys(state.scores).map(function(player) {
@@ -372,7 +372,7 @@ api.get('/games/:game/state', function(req, res, next) {
 
     res.json({
       edges: edges,
-      board: board,
+      panels: panels,
       scores: scores,
       turn: req.base + '/users/' + state.turn
     });
